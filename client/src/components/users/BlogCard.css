@@ -1,0 +1,16 @@
+.form-container {
+    padding: 20px;
+    background: #f8f9fa; /* Light background color */
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-top: 100px; /* Margin from the header */
+    margin-left: 20px; /* Margin from the left edge */
+    background-image: url('../../assets//blog.jpg'); /* Background image */
+    background-size: cover; /* Ensure the background image covers the entire container */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeati
+  }
+  .form-col {
+    padding-right: 0; /* Remove padding from the right of the column */
+  }
+  
