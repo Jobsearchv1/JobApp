@@ -75,7 +75,14 @@ exports.loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Debugging: Afficher la clé secrète pour s'assurer qu'elle est définie
+        console.log('JWT Secret:', process.env.JWT_SECRET);
+
+        const token = jwt.sign(
+            { id: user.id },
+            process.env.JWT_SECRET || 'defaultsecretkey',  // Valeur par défaut en cas d'absence
+            { expiresIn: '1h' }
+        );
 
         res.status(200).json({
             token,
