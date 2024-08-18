@@ -1,16 +1,15 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
+const path = require('path');
+const fs = require('fs');
 
-require('dotenv').config();
-
-
-// Register a new user
+// Enregistrement d'un nouvel utilisateur
 exports.registerUser = async (req, res) => {
     const {
         firstName, lastName, email, password, phone, mobile, address,
         github, twitter, instagram, facebook, job_title, location, website,
-        experience, education, skills
+        experience, education, skills, image // Ajout de l'image
     } = req.body;
 
     try {
@@ -34,7 +33,8 @@ exports.registerUser = async (req, res) => {
             website,
             experience,
             education,
-            skills
+            skills,
+            image // Ajout de l'image
         });
 
         res.status(201).json({
@@ -55,6 +55,7 @@ exports.registerUser = async (req, res) => {
             experience: user.experience,
             education: user.education,
             skills: user.skills,
+            image: user.image, // Ajout de l'image
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         });
@@ -64,7 +65,7 @@ exports.registerUser = async (req, res) => {
     }
 };
 
-// Authenticate a user
+// Authentification d'un utilisateur
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
@@ -96,7 +97,8 @@ exports.loginUser = async (req, res) => {
                 website: user.website,
                 experience: user.experience,
                 education: user.education,
-                skills: user.skills
+                skills: user.skills,
+                image: user.image // Ajout de l'image
             }
         });
     } catch (error) {
@@ -105,7 +107,7 @@ exports.loginUser = async (req, res) => {
     }
 };
 
-// Get user by ID
+// Obtenir un utilisateur par ID
 exports.getUser = async (req, res) => {
     const { id } = req.params;
 
@@ -131,6 +133,7 @@ exports.getUser = async (req, res) => {
             experience: user.experience,
             education: user.education,
             skills: user.skills,
+            image: user.image, // Ajout de l'image
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         });
@@ -140,20 +143,19 @@ exports.getUser = async (req, res) => {
     }
 };
 
-// Update user by ID
+// Mettre à jour un utilisateur par ID
 exports.updateUser = async (req, res) => {
     const { id } = req.params;
     const {
         firstName, lastName, email, phone, mobile, address,
         github, twitter, instagram, facebook, job_title, location, website,
-        experience, education, skills
+        experience, education, skills, image // Ajout de l'image
     } = req.body;
 
     try {
         const user = await User.findByPk(id);
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        // Update the user with new information
         await user.update({
             firstName,
             lastName,
@@ -170,7 +172,8 @@ exports.updateUser = async (req, res) => {
             website,
             experience,
             education,
-            skills
+            skills,
+            image // Ajout de l'image
         });
 
         res.status(200).json({
@@ -191,6 +194,7 @@ exports.updateUser = async (req, res) => {
             experience: user.experience,
             education: user.education,
             skills: user.skills,
+            image: user.image, // Ajout de l'image
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         });
@@ -200,18 +204,18 @@ exports.updateUser = async (req, res) => {
     }
 };
 
-/// Get all users
+// Obtenir tous les utilisateurs
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.findAll(); // Fetch all users from the database
-        res.status(200).json(users); // Return the users as a JSON response
+        const users = await User.findAll();
+        res.status(200).json(users);
     } catch (error) {
         console.error('Error retrieving users:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
-// Delete user by ID
+// Supprimer un utilisateur par ID
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
@@ -221,9 +225,30 @@ exports.deleteUser = async (req, res) => {
 
         await user.destroy();
 
-        res.status(204).json(); // No content
+        res.status(204).json(); // Pas de contenu
     } catch (error) {
         console.error('Error deleting user:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+};
+
+// Fonction pour gérer le téléchargement des images
+exports.uploadImage = (req, res) => {
+    if (!req.files || !req.files.image) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const image = req.files.image;
+    const uploadPath = path.join(__dirname, '../uploads/', image.name);
+
+    image.mv(uploadPath, (err) => {
+        if (err) {
+            console.error('Error moving file:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        res.status(200).json({
+            imagePath: `/uploads/${image.name}` // Retourne le chemin de l'image
+        });
+    });
 };

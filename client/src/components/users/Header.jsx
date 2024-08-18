@@ -1,7 +1,6 @@
 import React from 'react';
-import './Header.css';
 import { Link } from 'react-router-dom';
-import userPhoto from '../../assets/male-placeholder.jpg';
+import './Header.css'; // Assurez-vous que ce fichier contient les styles nécessaires
 
 const Header = () => {
   return (
@@ -27,6 +26,12 @@ const Header = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/dashboard">Dashboard</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/applications">
+              <i className="fas fa-folder"></i> {/* Icon for applications */}
+              Applications
+            </Link>
           </li>
         </ul>
         <ul className="navbar-nav align-items-center">

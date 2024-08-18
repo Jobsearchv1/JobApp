@@ -11,8 +11,6 @@ import './ProfilePage.css'
 import FriendRequests from './FriendRequestCard.jsx';
 import Header from './Header.jsx'
 
-import malePlaceholder from '../../assets/male-placeholder.jpg';
-import femalePlaceholder from '../../assets/female-placeholder.jpg'; // Fixed double slashes
 import testImage from '../../assets/testimg.jpg'; // Add the path to your image
 
 
@@ -35,7 +33,7 @@ const ProfilePage = ({ onNewMessage }) => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:3026/api/users/${id}`);
+        const response = await axios.get(`http://localhost:3032/api/users/${id}`);
         setUser(response.data);
         setApplications(response.data.applications || {});
       } catch (error) {
@@ -100,7 +98,7 @@ const ProfilePage = ({ onNewMessage }) => {
     );
   }
 
-  const profileImage = user.gender === 'male' ? malePlaceholder : femalePlaceholder;
+ 
 
   return (
     <>
@@ -122,7 +120,7 @@ const ProfilePage = ({ onNewMessage }) => {
               <div className="card mb-4 shadow-lg border-0">
                 <div className="card-body text-center">
                   <img
-                    src={user.photo || profileImage}
+                   src={user.image ? user.image : testImage} // Affiche l'image utilisateur ou une image par défaut
                     alt="Profile"
                     className="rounded-circle img-fluid mb-3"
                     style={{ width: '150px', height: '150px', objectFit: 'cover' }}

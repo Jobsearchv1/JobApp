@@ -1,7 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database.js');
 
-
 class User extends Model {}
 
 User.init({
@@ -38,12 +37,13 @@ User.init({
   address: DataTypes.STRING,
   experience: DataTypes.TEXT,
   education: DataTypes.TEXT,
-  skills: DataTypes.TEXT
+  skills: DataTypes.TEXT,
+  image: DataTypes.STRING // Ajout de l'image
 }, {
   sequelize,
   modelName: 'User',
   tableName: 'users',
-  timestamps: true // For `createdAt` and `updatedAt`
+  timestamps: true // Pour `createdAt` et `updatedAt`
 });
 
 module.exports = User;

@@ -10,6 +10,7 @@ import blogreact from '../../assets/blogreact.jpg';
 import blogreacttest from '../../assets/blogreacttest.png';
 import blogwoman from '../../assets/blogwoman.jpg';
 
+
 const BlogCard = () => {
   const [blogs, setBlogs] = useState([
     {
@@ -92,14 +93,14 @@ const BlogCard = () => {
   };
 
   return (
-    <Container>
+    <Container className="my-5">
       <Row>
-        <Col md={4} className="form-col">
-          <div className="form-container">
-            <h2>Add a New Blog</h2>
-            <Form onSubmit={handleSubmit} className="mb-5">
+        <Col md={4}>
+          <div className="form-container p-4 bg-light rounded shadow-sm">
+            <h2 className="mb-4">Add a New Blog</h2>
+            <Form onSubmit={handleSubmit}>
               {/* Form inputs for adding a new blog */}
-              <Form.Group controlId="formImage">
+              <Form.Group controlId="formImage" className="mb-3">
                 <Form.Label>Image URL</Form.Label>
                 <Form.Control
                   type="text"
@@ -111,7 +112,7 @@ const BlogCard = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formTitle">
+              <Form.Group controlId="formTitle" className="mb-3">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                   type="text"
@@ -123,7 +124,7 @@ const BlogCard = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formDescription">
+              <Form.Group controlId="formDescription" className="mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   as="textarea"
@@ -136,7 +137,7 @@ const BlogCard = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formDate">
+              <Form.Group controlId="formDate" className="mb-3">
                 <Form.Label>Date</Form.Label>
                 <Form.Control
                   type="date"
@@ -147,7 +148,7 @@ const BlogCard = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formAuthorImage">
+              <Form.Group controlId="formAuthorImage" className="mb-3">
                 <Form.Label>Author Image URL</Form.Label>
                 <Form.Control
                   type="text"
@@ -159,7 +160,7 @@ const BlogCard = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formBadges">
+              <Form.Group controlId="formBadges" className="mb-3">
                 <Form.Label>Badges (comma-separated)</Form.Label>
                 <Form.Control
                   type="text"
@@ -171,48 +172,47 @@ const BlogCard = () => {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" className="w-100">
                 Add Blog
               </Button>
             </Form>
           </div>
         </Col>
         <Col md={8}>
-          <h2 className="mt-5">Blog Posts</h2>
-          <div className="row">
+          <h2 className="mb-4">Blog Posts</h2>
+          <div className="blog-list">
             {blogs.map((blog, index) => (
-              <div className="col-md-6 col-lg-4" key={index}>
-                <Card className="mb-4">
-                  <Card.Img variant="top" src={blog.image} alt={blog.title} />
-                  <Card.Body>
-                    <Card.Title>{blog.title}</Card.Title>
-                    <Card.Text>{blog.description}</Card.Text>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">{blog.date}</small>
-                      <img
-                        src={blog.authorImage}
-                        alt="Author"
-                        style={{ width: '30px', height: '30px', borderRadius: '50%' }}
-                      />
-                    </div>
-                    <div className="mt-2">
-                      {blog.badges.map((badge, idx) => (
-                        <span key={idx} className="badge bg-secondary me-1">
-                          {badge}
-                        </span>
-                      ))}
-                    </div>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      className="mt-3"
-                      onClick={() => handleDelete(index)}
-                    >
-                      <FaTrash /> Delete
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </div>
+              <Card className="blog-card shadow-sm mb-4" key={index}>
+                <Card.Img variant="top" src={blog.image} alt={blog.title} className="card-img-top" />
+                <Card.Body>
+                  <Card.Title>{blog.title}</Card.Title>
+                  <Card.Text>{blog.description}</Card.Text>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <small className="text-muted">{blog.date}</small>
+                    <img
+                      src={blog.authorImage}
+                      alt="Author"
+                      className="rounded-circle"
+                      style={{ width: '30px', height: '30px' }}
+                    />
+                  </div>
+                  <div className="mt-2">
+                    {blog.badges.map((badge, idx) => (
+                      <span key={idx} className="badge bg-secondary me-1">
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="mt-3"
+                    onClick={() => handleDelete(index)}
+                  >
+                    <FaTrash /> Delete
+                  </Button>
+                </Card.Body>
+              </Card>
             ))}
           </div>
         </Col>

@@ -1,5 +1,3 @@
-/////////updated done
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,17 +21,39 @@ const CreateAccountPage = () => {
         website: '',
         experience: '',
         education: '',
-        skills: ''
+        skills: '',
+        profileImage: '' // Field for storing Cloudinary image URL
     });
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
     const [loading, setLoading] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
+    const [uploadingImage, setUploadingImage] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        const uploadData = new FormData();
+        uploadData.append('file', file);
+        uploadData.append('upload_preset', 'ikbelS');
+
+        setUploadingImage(true);
+        try {
+            const res = await axios.post('https://api.cloudinary.com/v1_1/dnynsji6q/image/upload', uploadData);
+            setFormData({ ...formData, profileImage: res.data.secure_url });
+            setMessageType('success');
+            setMessage('Image uploaded successfully!');
+        } catch (error) {
+            setMessageType('error');
+            setMessage('Failed to upload image. Please try again.');
+        } finally {
+            setUploadingImage(false);
+        }
     };
 
     const handleNext = () => setCurrentStep((prev) => prev + 1);
@@ -63,7 +83,7 @@ const CreateAccountPage = () => {
         }
 
         try {
-            await axios.post('http://localhost:3026/api/users/register', formData);
+            await axios.post('http://localhost:3030/api/users/register', formData);
             setMessageType('success');
             setMessage('Account created successfully! Redirecting to login...');
             setTimeout(() => {
@@ -101,7 +121,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="First Name"
                                                             name="firstName"
-                                                            value={formData.firstName}
+                                                            value={formData.firstName || ''}
                                                             onChange={handleChange}
                                                             required
                                                         />
@@ -115,7 +135,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Last Name"
                                                             name="lastName"
-                                                            value={formData.lastName}
+                                                            value={formData.lastName || ''}
                                                             onChange={handleChange}
                                                             required
                                                         />
@@ -132,7 +152,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Email"
                                                             name="email"
-                                                            value={formData.email}
+                                                            value={formData.email || ''}
                                                             onChange={handleChange}
                                                             required
                                                         />
@@ -146,7 +166,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Password"
                                                             name="password"
-                                                            value={formData.password}
+                                                            value={formData.password || ''}
                                                             onChange={handleChange}
                                                             required
                                                         />
@@ -163,7 +183,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Phone"
                                                             name="phone"
-                                                            value={formData.phone}
+                                                            value={formData.phone || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="phone">Phone</label>
@@ -176,10 +196,24 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Mobile"
                                                             name="mobile"
-                                                            value={formData.mobile}
+                                                            value={formData.mobile || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="mobile">Mobile</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="row mb-4">
+                                                <div className="col-md-12">
+                                                    <div className="form-outline">
+                                                        <input
+                                                            type="file"
+                                                            className="form-control form-control-lg"
+                                                            name="profileImage"
+                                                            onChange={handleImageUpload}
+                                                        />
+                                                        <label className="form-label" htmlFor="profileImage">Upload Profile Image</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -201,7 +235,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Address"
                                                             name="address"
-                                                            value={formData.address}
+                                                            value={formData.address || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="address">Address</label>
@@ -214,7 +248,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="GitHub"
                                                             name="github"
-                                                            value={formData.github}
+                                                            value={formData.github || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="github">GitHub</label>
@@ -230,7 +264,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Twitter"
                                                             name="twitter"
-                                                            value={formData.twitter}
+                                                            value={formData.twitter || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="twitter">Twitter</label>
@@ -243,7 +277,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Instagram"
                                                             name="instagram"
-                                                            value={formData.instagram}
+                                                            value={formData.instagram || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="instagram">Instagram</label>
@@ -259,7 +293,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Facebook"
                                                             name="facebook"
-                                                            value={formData.facebook}
+                                                            value={formData.facebook || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="facebook">Facebook</label>
@@ -272,7 +306,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Job Title"
                                                             name="job_title"
-                                                            value={formData.job_title}
+                                                            value={formData.job_title || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="job_title">Job Title</label>
@@ -288,7 +322,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Location"
                                                             name="location"
-                                                            value={formData.location}
+                                                            value={formData.location || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="location">Location</label>
@@ -301,7 +335,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Website"
                                                             name="website"
-                                                            value={formData.website}
+                                                            value={formData.website || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="website">Website</label>
@@ -317,7 +351,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Experience"
                                                             name="experience"
-                                                            value={formData.experience}
+                                                            value={formData.experience || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="experience">Experience</label>
@@ -330,7 +364,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Education"
                                                             name="education"
-                                                            value={formData.education}
+                                                            value={formData.education || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="education">Education</label>
@@ -346,7 +380,7 @@ const CreateAccountPage = () => {
                                                             className="form-control form-control-lg"
                                                             placeholder="Skills"
                                                             name="skills"
-                                                            value={formData.skills}
+                                                            value={formData.skills || ''}
                                                             onChange={handleChange}
                                                         />
                                                         <label className="form-label" htmlFor="skills">Skills</label>
@@ -357,7 +391,7 @@ const CreateAccountPage = () => {
                                             <div className="d-flex justify-content-between">
                                                 <button type="button" className="btn btn-secondary" onClick={handlePrevious}>Previous</button>
                                                 <button type="submit" className="btn btn-primary" disabled={loading}>
-                                                    {loading ? 'Submitting...' : 'Submit'}
+                                                    {loading ? 'Creating Account...' : 'Submit'}
                                                 </button>
                                             </div>
                                         </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel, Container, Row, Col, Card } from 'react-bootstrap';
-import img1 from '../../assets/ABOUT.jpg';
+
 import './About.css'
 
 
@@ -9,11 +9,7 @@ function About() {
     <>
       <Carousel>
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src={img1}
-            alt="First slide"
-          />
+          
           <Carousel.Caption>
             <h3>Send an email to hello@remoteworker.com and a member of our Support team will get back to you within 24 hours.</h3>
             <p>Remote Worker Ltd<br/>

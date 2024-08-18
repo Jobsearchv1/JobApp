@@ -1,14 +1,24 @@
-const { Notification } = require('../models/notificationModel.js');
-
-
-const getNotifications = async (req, res) => {
-  try {
-    const notifications = await Notification.findAll();
-    res.status(200).json(notifications);
-  } catch (error) {
-    console.error('Error fetching notifications:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+exports.getAllNotifications = (req, res) => {
+  // Code pour obtenir toutes les notifications
+  res.send('Get all notifications');
 };
 
-module.exports = { getNotifications };
+exports.createNotification = (req, res) => {
+  // Code pour créer une notification
+  res.send('Create notification');
+};
+
+exports.getNotificationById = (req, res) => {
+  // Code pour obtenir une notification par ID
+  res.send('Get notification by ID');
+};
+
+exports.updateNotification = (req, res) => {
+  // Code pour mettre à jour une notification
+  res.send('Update notification');
+};
+
+exports.deleteNotification = (req, res) => {
+  // Code pour supprimer une notification
+  res.send('Delete notification');
+};

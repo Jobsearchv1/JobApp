@@ -13,13 +13,21 @@ import ProfilePage from './components/users/ProfilePage.jsx';
 import CompanyDetails from './components/users/CompanyDetails.jsx'; // Importez le composant CompanyDetails
 import banner from './components/Banner.jsx'
 import JobDetails from './components/users/JobDetails.jsx'
-import ApplyPage from './components/users/ApplyPage.jsx'; // Importez le composant ApplyPage
+import ApplyPage from './components/users/ApplyPagenon.jsx'; // Importez le composant ApplyPage
 import UserList from './components/users/UserList.jsx'; 
 import Dashboard from './components/users/Dashboard.jsx';   
 import Templates from './components/users/Templates.jsx';
 import Features from './components/users/Features.jsx';
 import ErrorBoundary from './components/users/ErrorBoundary.jsx';
 import BlogCard from './components/users/BlogCard.jsx';
+import EmployerRegister from './components/Employers/employerRegister.jsx';
+import EmployerLogin from './components/Employers/LoginEmployer.jsx';
+import HomePageEmployer from './components/Employers/employerHome.jsx';
+import CVSearchPage from './components/Employers/CVSearchPage.jsx';
+import PostJobForm from './components/Employers/PostJobPage.jsx';
+import Workspace from './components/Employers/MyWorkSpace.jsx';
+import ApplyJobPage from './components/users/ApplyJobPage.jsx';
+import Applications from './components/users/ApplicationPage.jsx'
 
 function AppContent() {
   return (
@@ -42,6 +50,14 @@ function AppContent() {
           <Route path="/blog" element={<BlogCard />} /> 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user-list" element={<UserList />} />
+          <Route path="/sign-up-Employer" element={<EmployerRegister />} />
+          <Route path="/login-Employer" element={<EmployerLogin />} />
+          <Route path="/Home-Employer" element={<HomePageEmployer />} />
+          <Route path="/CV-Search" element={<CVSearchPage />} />
+          <Route path="/Post-Job" element={<PostJobForm />} />
+          <Route path="/Workspace" element={<Workspace />} />
+          <Route path="/apply/:jobId" element={<ApplyJobPage />} />
+          <Route path="/applications" element={<Applications />} />
         </Routes>
       </div>
     </>

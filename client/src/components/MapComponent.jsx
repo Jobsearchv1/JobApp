@@ -11,7 +11,7 @@ const countryCoordinates = {
 };
 
 const MapComponent = ({ countryCode, zoom }) => {
-  const [position, setPosition] = useState([51.505, -0.09]); // Position par défaut (Londres)
+const [position, setPosition] = useState([51.505, -0.09]); // Position par défaut (Londres)
 
   useEffect(() => {
     if (countryCode && countryCoordinates[countryCode]) {

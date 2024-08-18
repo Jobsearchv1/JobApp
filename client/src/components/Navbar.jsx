@@ -23,11 +23,15 @@ const NavBar = () => {
                                 <NavDropdown.Item as={Link} to="/login">Log In</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/sign-up">Sign Up</NavDropdown.Item>
                             </NavDropdown>
+                            <NavDropdown title="Employers" id="employers-dropdown">
+                                <NavDropdown.Item as={Link} to="/login-Employer">Log In</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/sign-up-Employer">Sign Up</NavDropdown.Item>
+                            </NavDropdown>
                             <Nav.Link as={Link} to="/user-list">
-                                <i className="fas fa-users"></i> {/* Icône pour la liste des utilisateurs */}
+                                <i className="fas fa-users"></i> {/* Icon for user list */}
                             </Nav.Link>
                             <Nav.Link as={Link} to="/logout">
-                                <i className="fas fa-sign-out-alt"></i>
+                                <i className="fas fa-sign-out-alt"></i> {/* Icon for logout */}
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

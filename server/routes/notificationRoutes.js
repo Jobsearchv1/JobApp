@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getNotifications } = require('../controllers/notificationController.js');
-const { authenticateUser } = require('../middleware/authMiddleware.js'); // Assuming you have a middleware for authentication
+const NotificationController = require('../controllers/notificationController.js');
 
-router.get('/', authenticateUser, getNotifications);
+// Assurez-vous que ces méthodes existent dans le NotificationController
+router.get('/', NotificationController.getAllNotifications);
+router.post('/', NotificationController.createNotification);
 
 module.exports = router;

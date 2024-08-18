@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const UserContext = createContext();
 
@@ -12,13 +12,13 @@ export const UserProvider = ({ children }) => {
         if (token && userData) {
             try {
                 setUser(JSON.parse(userData));
-                console.log('User data loaded:', JSON.parse(userData)); // Ajoutez ce log pour vérifier les données utilisateur
+                console.log('User data loaded:', JSON.parse(userData));
             } catch (error) {
                 console.error('Failed to parse user data:', error);
                 localStorage.removeItem('user');
             }
         } else {
-            console.log('No token or user data found.'); // Ajoutez ce log pour vérifier si les données utilisateur sont présentes
+            console.log('No token or user data found.');
         }
     }, []);
 
@@ -27,4 +27,9 @@ export const UserProvider = ({ children }) => {
             {children}
         </UserContext.Provider>
     );
+};
+
+// Define and export the custom hook
+export const useUserContext = () => {
+    return useContext(UserContext);
 };

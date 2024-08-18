@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaBriefcase, FaMapMarkerAlt } from 'react-icons/fa';
-import './UserList.css'; // Ensure the path is correct
+import './UserList.css'; 
+
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
