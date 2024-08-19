@@ -7,6 +7,7 @@ import './Navbar.css';
 const NavBar = () => {
     return (
         <>
+        
             <div className='topPage'>
                 <h4></h4>
             </div>

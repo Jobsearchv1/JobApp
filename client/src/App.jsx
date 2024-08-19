@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { UserProvider } from './components/users/UserContext.jsx'; 
 import Navbar from "./components/NavbarHome/NavbarHome.jsx";
@@ -23,14 +23,18 @@ import Features from './components/users/Features.jsx';
 import ErrorBoundary from './components/users/ErrorBoundary.jsx';
 import BlogCard from './components/users/BlogCard.jsx';
 import Footer from './components/Footer.jsx';
+import Header from "./components/users/Header.jsx";
 
 import FreeAdviceService from './Pages/FreeAdviceService.jsx';
 import LearnMore from './Pages/LearnMore.jsx';
 import ProhibitedActions from './Pages/Prohibited actions.jsx';
 function AppContent() {
+  const [loggedIn,setloggedIn] = useState(false);
   return (
     <>
-      <Navbar />
+     {loggedIn ? <Header /> : <Navbar />}
+
+     
       <div className="content">
         <Routes>
           <Route path="/" element={<Home/>} />
@@ -44,7 +48,12 @@ function AppContent() {
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/company/:id" element={<CompanyDetails />} />
           <Route path="/sign-up" element={<CreateAccountPage />} />
-          <Route path="/login" element={<LoginPage/>} />
+          <Route
+            path="/login"
+            element={
+              <LoginPage loggedIn={loggedIn} setloggedIn={setloggedIn} />
+            }
+          />
           <Route path="/job/:id" element={<JobDetails />} />
           <Route path="/apply/:id" element={<ApplyPage />} />
           <Route path="/Templates" element={<Templates />} />
